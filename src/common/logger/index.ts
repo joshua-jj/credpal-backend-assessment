@@ -7,10 +7,10 @@ let logTransports: Transport[];
 if (configuration.NODE_ENV !== 'production') {
   logTransports = [new transports.Console()];
 } else {
-  logTransports = [new transports.File({ filename: 'logs/logs.log' })];
+  logTransports = [new transports.Console(), new transports.File({ filename: 'logs/logs.log' })];
 }
 
-let logFormat = format.combine(
+const logFormat = format.combine(
   format.colorize(),
   format.splat(),
   format.metadata(),
@@ -20,6 +20,6 @@ let logFormat = format.combine(
   }),
 );
 
-let logger = createLogger({ transports: logTransports, format: logFormat });
+const logger = createLogger({ transports: logTransports, format: logFormat });
 
 export default logger;

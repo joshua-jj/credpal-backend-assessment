@@ -9,7 +9,6 @@ const app = createExpressServer({
   controllers: [path.join(__dirname, '/core/controllers/**/*.ts')],
 });
 app.listen(configuration.port || 3000);
-console.log('Running');
 logger.info(
-  `Server started and listening on port ${configuration.port}, at ${new Date().toISOString()}`,
+  `Server started and listening on port ${configuration.port}, at ${new Date()}`,
 );
