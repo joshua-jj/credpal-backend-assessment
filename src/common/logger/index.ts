@@ -15,8 +15,8 @@ const logFormat = format.combine(
   format.splat(),
   format.metadata(),
   format.timestamp(),
-  format.printf(({ timestamp, level, message, metadata }) => {
-    return `[${timestamp}] ${level}: ${message}. ${JSON.stringify(metadata)}`;
+  format.printf(({ timestamp, level, message }) => {
+    return `[${timestamp}] ${level}: ${message}.`;
   }),
 );
 
