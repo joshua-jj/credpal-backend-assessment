@@ -17,6 +17,8 @@
     "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.1",
     "nodemon": "^3.1.9",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
 }
