@@ -1,4 +1,4 @@
-export class HelperUtil {
+export class HelpersUtil {
   public static parseApiResponse = (
     statusCode: number,
     message: string,
