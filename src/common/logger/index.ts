@@ -13,7 +13,6 @@ if (configuration.NODE_ENV !== 'production') {
 const logFormat = format.combine(
   format.colorize(),
   format.splat(),
-  format.metadata(),
   format.timestamp(),
   format.printf(({ timestamp, level, message }) => {
     return `[${timestamp}] ${level}: ${message}.`;
