@@ -8,7 +8,7 @@ const app = createExpressServer({
   routePrefix: '/api',
   controllers: [path.join(__dirname, '/core/controllers/**/*.ts')],
 });
-app.listen(configuration.port || 3000);
+app.listen(configuration.PORT || 3000);
 logger.info(
-  `Server started and listening on port ${configuration.port}, at ${new Date()}`,
+  `Server started and listening on port ${configuration.PORT}, at ${new Date()}`,
 );
