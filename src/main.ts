@@ -11,5 +11,5 @@ const app = createExpressServer({
 });
 app.listen(configuration.PORT || 3000);
 logger.info(
-  `Server started and listening on port ${configuration.PORT}, at ${new Date()}`,
+  `Server started and listening on port ${configuration.PORT}, on ${new Date()}`,
 );
