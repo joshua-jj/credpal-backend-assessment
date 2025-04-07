@@ -14,6 +14,9 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.1.0
+      http-status-codes:
+        specifier: ^2.3.0
+        version: 2.3.0
       inversify:
         specifier: ^7.5.0
         version: 7.5.0(reflect-metadata@0.2.2)

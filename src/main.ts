@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import 'module-alias/register';
 import logger from '@common/logger';
 import configuration from '@config/env.config';
@@ -6,7 +7,7 @@ import { createExpressServer } from 'routing-controllers';
 
 const app = createExpressServer({
   routePrefix: '/api',
-  controllers: [path.join(__dirname, '/core/controllers/**/*.ts')],
+  controllers: [path.join(__dirname, '/core/controllers/**/*.js')],
 });
 app.listen(configuration.PORT || 3000);
 logger.info(
