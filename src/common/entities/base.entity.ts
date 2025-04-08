@@ -13,10 +13,10 @@ export class BaseAbstractEntity implements IBaseAbstractEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column({ name: 'created_by', type: 'bigint' })
+  @Column({ name: 'created_by', type: 'bigint', nullable: true })
   createdBy: number;
 
-  @Column({ name: 'updated_by', type: 'bigint' })
+  @Column({ name: 'updated_by', type: 'bigint', nullable: true })
   updatedBy: number;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
@@ -24,7 +24,4 @@ export class BaseAbstractEntity implements IBaseAbstractEntity {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   updatedAt: Date;
-
-  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp', nullable: true })
-  deletedAt: Date;
 }

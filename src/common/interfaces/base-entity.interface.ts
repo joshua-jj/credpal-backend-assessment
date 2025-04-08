@@ -4,5 +4,5 @@ export interface IBaseAbstractEntity {
   updatedBy: string | number;
   createdAt: Date;
   updatedAt: Date;
-  deletedAt: Date;
+  deletedAt?: Date;
 }
