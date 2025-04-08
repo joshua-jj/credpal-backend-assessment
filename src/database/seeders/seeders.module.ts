@@ -1,11 +1,9 @@
 import { TDatabaseConfig } from '@common/types/config.type';
 import configuration from '@config/env.config';
-import { ModulesModule } from '@modules/modules.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { UsersSeeder } from './users.seeder';
 
 @Module({
   imports: [
@@ -18,9 +16,7 @@ import { AppService } from './app.service';
       useFactory: (configService: ConfigService) =>
         configService.get<TDatabaseConfig>('database'),
     }),
-    ModulesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [UsersSeeder],
 })
-export class AppModule {}
+export class SeedersModule {}
