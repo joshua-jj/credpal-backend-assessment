@@ -13,11 +13,11 @@ import { AppService } from './app.service';
       isGlobal: true,
       load: [configuration],
     }),
-    // TypeOrmModule.forRootAsync({
-    //   inject: [ConfigService],
-    //   useFactory: (configService: ConfigService) =>
-    //     configService.get<TDatabaseConfig>('database'),
-    // }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        configService.get<TDatabaseConfig>('database'),
+    }),
     ModulesModule,
   ],
   controllers: [AppController],
