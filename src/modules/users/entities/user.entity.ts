@@ -2,7 +2,7 @@ import { BaseAbstractEntity } from '@common/entities/base.entity';
 import { UserStatus } from '@common/enums/user-status.enum';
 import { Column, Entity } from 'typeorm';
 
-@Entity()
+@Entity('users')
 export class User extends BaseAbstractEntity {
   @Column({ type: 'varchar', name: 'full_name' })
   fullName: string;
