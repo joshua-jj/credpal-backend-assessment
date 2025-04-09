@@ -1,4 +1,5 @@
 import { TDatabaseConfig } from '@common/types/config.type';
+import migrations from '@database/migrations';
 import { registerAs } from '@nestjs/config';
 
 const databaseConfig = registerAs(
@@ -9,7 +10,7 @@ const databaseConfig = registerAs(
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+    migrations,
     autoLoadEntities: true,
     logging: true,
   }),

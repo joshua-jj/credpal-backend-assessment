@@ -1,5 +1,5 @@
 import { TDatabaseConfig } from '@common/types/config.type';
-import configuration from '@config/index';
+import configuration from 'src/config/index';
 import { ModulesModule } from '@modules/modules.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
