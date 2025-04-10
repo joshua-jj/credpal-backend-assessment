@@ -25,7 +25,7 @@ export class HelperUtil {
 
   public static createJwtPayload = (user: User) => {
     return {
-      id: user.id,
+      id: Number(user.id),
       email: user.email,
     };
   };

@@ -15,7 +15,7 @@ export class Transaction extends BaseAbstractEntity {
   type: TransactionType;
 
   @Column({ type: 'decimal', precision: 15, scale: 2 })
-  amount: number;
+  amount: string;
 
   @ManyToOne(() => Wallet, (wallet) => wallet.sentTransactions, {
     onDelete: 'SET NULL',

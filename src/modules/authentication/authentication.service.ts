@@ -16,20 +16,20 @@ export class AuthenticationService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    private readonly logger: LoggerService
+    private readonly logger: LoggerService,
   ) {
     this.logger.setContext(AuthenticationService.name);
   }
 
-  async signUp(signUpData: CreateUserDto) {
-    const { email } = signUpData;
-    const [user] = await this.usersService.findByEmail(email);
+  async signUp(signUpDto: CreateUserDto) {
+    const { email } = signUpDto;
+    const user = await this.usersService.findByEmail(email);
 
     if (user) {
       throw new ConflictException('User already exists');
     }
 
-    const newUser = await this.usersService.create(signUpData);
+    const newUser = await this.usersService.createUser(signUpDto);
     const payload = HelperUtil.createJwtPayload(newUser);
     const accessToken = await this.jwtService.signAsync(payload);
     return {
@@ -38,15 +38,18 @@ export class AuthenticationService {
     };
   }
 
-  async logIn(loginData: LoginDto) {
-    const { email, password } = loginData;
-    const [user] = await this.usersService.findByEmail(email);
+  async logIn(loginDto: LoginDto) {
+    const { email, password } = loginDto;
+    const user = await this.usersService.findByEmail(email);
 
     if (!user) {
       throw new NotFoundException('Email not found');
     }
 
-    const isMatch = await HelperUtil.isPasswordsMatched(password, user.password);
+    const isMatch = await HelperUtil.isPasswordsMatched(
+      password,
+      user.password,
+    );
 
     if (!isMatch) {
       throw new BadRequestException('Incorrect Password');
