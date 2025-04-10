@@ -1,20 +1,12 @@
+import { CurrentUser } from '@common/decorators/current-user.decorator';
+import { HelperUtil } from '@common/utils/helper.util';
 import {
   Controller,
   Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  ParseIntPipe,
-  HttpStatus,
+  HttpStatus
 } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 import { WalletsService } from './wallets.service';
-import { CreateWalletDto } from './dto/create-wallet.dto';
-import { UpdateWalletDto } from './dto/update-wallet.dto';
-import { CurrentUser } from '@common/decorators/current-user.decorator';
-import { ApiOperation, ApiParam } from '@nestjs/swagger';
-import { HelperUtil } from '@common/utils/helper.util';
 
 @Controller('wallets')
 export class WalletsController {
@@ -31,18 +23,4 @@ export class WalletsController {
     );
   }
 
-  @Post('fund')
-  fund(@Param('id') id: string) {
-    return this.walletsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWalletDto: UpdateWalletDto) {
-    return this.walletsService.update(+id, updateWalletDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.walletsService.remove(+id);
-  }
 }

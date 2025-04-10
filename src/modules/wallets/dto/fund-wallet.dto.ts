@@ -1,19 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsString, Length } from 'class-validator';
 
 export class FundWalletDto {
   @ApiProperty()
-  @IsNotEmpty()
   @IsString()
-  fullName: string;
+  @Length(16)
+  cardNumber: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsEmail()
-  email: string;
+  @IsString()
+  expiryDate: string;
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsString()
-  password: string;
+  @Length(3)
+  cvv: string;
 }
