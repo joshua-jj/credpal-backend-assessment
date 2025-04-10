@@ -8,7 +8,7 @@ export class Wallet extends BaseAbstractEntity {
   @Column({ type: 'varchar', unique: true })
   wallet_id: string;
 
-  @Column({ type: 'decimal', length: 15, scale: 2, default: 0.0 })
+  @Column({ type: 'decimal', precision: 15, scale: 2, default: 0.0 })
   balance: number;
 
   @OneToOne(() => User, (user) => user.wallet, {

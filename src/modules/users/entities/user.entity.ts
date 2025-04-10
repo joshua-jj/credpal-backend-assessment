@@ -21,7 +21,6 @@ export class User extends BaseAbstractEntity {
   })
   status: UserStatus;
   @OneToOne(() => Wallet, (wallet) => wallet.user, {
-    eager: true,
     onDelete: 'SET NULL',
   })
   wallet: Wallet;

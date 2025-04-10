@@ -14,7 +14,7 @@ export class Transaction extends BaseAbstractEntity {
   })
   type: TransactionType;
 
-  @Column({ type: 'decimal', length: 15, scale: 2 })
+  @Column({ type: 'decimal', precision: 15, scale: 2 })
   amount: number;
 
   @ManyToOne(() => Wallet, (wallet) => wallet.sentTransactions, {

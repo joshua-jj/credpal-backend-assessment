@@ -3,7 +3,6 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { UsersModule } from './users/users.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { WalletsModule } from './wallets/wallets.module';
-import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [AuthenticationModule, UsersModule, TransactionsModule, WalletsModule]
