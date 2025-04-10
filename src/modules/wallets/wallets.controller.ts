@@ -11,7 +11,7 @@ export class WalletsController {
 
   @ApiOperation({ summary: 'Get wallet balance' })
   @Get('balance')
-  async getBalance(@CurrentUser('id') userId: number) {
+  async getBalance(@CurrentUser('walletId') userId: number) {
     const data = await this.walletsService.getBalance(userId);
     return HelperUtil.parseApiResponse(
       HttpStatus.OK,

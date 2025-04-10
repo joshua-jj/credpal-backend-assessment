@@ -59,7 +59,9 @@ export class AuthenticationService {
       ...user,
       walletId: user.wallet.walletId,
     });
+
     const accessToken = await this.jwtService.signAsync(payload);
+    
     return {
       accessToken,
       user: payload,
