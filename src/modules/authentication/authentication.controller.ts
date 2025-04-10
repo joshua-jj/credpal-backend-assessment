@@ -4,11 +4,14 @@ import { Public } from '@common/decorators/public.decorator';
 import { CreateUserDto } from '@modules/users/dto/create-user.dto';
 import { HelperUtil } from '@common/utils/helper.util';
 import { LoginDto } from './dtos/login.dto';
+import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 
+  @ApiOperation({ summary: 'User signup' })
+  @ApiBody({ type: CreateUserDto })
   @Public()
   @Post('/signup')
   async signUp(@Body() body: CreateUserDto) {
@@ -21,13 +24,15 @@ export class AuthenticationController {
   }
 
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'User signin' })
+  @ApiBody({ type: LoginDto })
   @Public()
   @Post('/login')
   async logIn(@Body() body: LoginDto) {
     const data = await this.authenticationService.logIn(body);
     return HelperUtil.parseApiResponse(
       HttpStatus.OK,
-      'Sign in successful',
+      'Login in successful',
       data,
     );
   }

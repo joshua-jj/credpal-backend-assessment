@@ -5,8 +5,8 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity('transactions')
 export class Transaction extends BaseAbstractEntity {
-  @Column({ type: 'varchar', unique: true })
-  transaction_id: string;
+  @Column({ name: 'transaction_id', type: 'varchar', unique: true })
+  transactionId: string;
 
   @Column({
     type: 'enum',

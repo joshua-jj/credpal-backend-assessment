@@ -7,6 +7,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
+import { LoggerModule } from '@common/logger/logger.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuthenticationService } from './authentication.service';
       },
     }),
     UsersModule,
+    LoggerModule
   ],
   controllers: [AuthenticationController],
   providers: [

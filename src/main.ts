@@ -27,14 +27,15 @@ async function bootstrap() {
     )
     .build();
   const document = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
+  SwaggerModule.setup('/api/docs', app, document);
 
-  app.getHttpAdapter().get('api/docs/json', (req, res) => {
+  app.getHttpAdapter().get('/api/docs/json', (req, res) => {
     res.json(document);
   });
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('port') || 3000;
+  app.listen(port)
   Logger.log(`Application is running on port ${port}`);
 }
 bootstrap();

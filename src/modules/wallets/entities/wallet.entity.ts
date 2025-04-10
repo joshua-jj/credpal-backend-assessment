@@ -5,8 +5,8 @@ import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 
 @Entity('wallets')
 export class Wallet extends BaseAbstractEntity {
-  @Column({ type: 'varchar', unique: true })
-  wallet_id: string;
+  @Column({ name: 'wallet_id', type: 'varchar', unique: true })
+  walletId: string;
 
   @Column({ type: 'decimal', precision: 15, scale: 2, default: 0.0 })
   balance: number;

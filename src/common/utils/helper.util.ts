@@ -26,4 +26,8 @@ export class HelperUtil {
       email: user.email,
     };
   };
+
+  public static generateWalletId = (): `WAL${string}` => {
+    return `WAL`;
+  }
 }

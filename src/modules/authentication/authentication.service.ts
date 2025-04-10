@@ -9,16 +9,20 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dtos/login.dto';
+import { LoggerService } from '@common/logger/logger.service';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+    private readonly logger: LoggerService
+  ) {
+    this.logger.setContext(AuthenticationService.name);
+  }
 
   async signUp(signUpData: CreateUserDto) {
-    const { email, password } = signUpData;
+    const { email } = signUpData;
     const [user] = await this.usersService.findByEmail(email);
 
     if (user) {
@@ -42,7 +46,7 @@ export class AuthenticationService {
       throw new NotFoundException('Email not found');
     }
 
-    const isMatch = HelperUtil.isPasswordsMatched(password, user.password);
+    const isMatch = await HelperUtil.isPasswordsMatched(password, user.password);
 
     if (!isMatch) {
       throw new BadRequestException('Incorrect Password');
