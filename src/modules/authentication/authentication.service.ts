@@ -55,7 +55,10 @@ export class AuthenticationService {
       throw new BadRequestException('Incorrect Password');
     }
 
-    const payload = HelperUtil.createJwtPayload(user);
+    const payload = HelperUtil.createJwtPayload({
+      ...user,
+      walletId: user.wallet.walletId,
+    });
     const accessToken = await this.jwtService.signAsync(payload);
     return {
       accessToken,
