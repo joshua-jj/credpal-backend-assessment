@@ -1,11 +1,8 @@
 import { CurrentUser } from '@common/decorators/current-user.decorator';
 import { HelperUtil } from '@common/utils/helper.util';
-import {
-  Controller,
-  Get,
-  HttpStatus
-} from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
+import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
+import { ApiBody, ApiOperation } from '@nestjs/swagger';
+import { FundWalletDto } from './dto/fund-wallet.dto';
 import { WalletsService } from './wallets.service';
 
 @Controller('wallets')
@@ -23,4 +20,10 @@ export class WalletsController {
     );
   }
 
+  @ApiOperation({ summary: 'Fund wallet' })
+  @ApiBody({ type: FundWalletDto })
+  @Post('fund')
+  fund(@Body() body: FundWalletDto) {
+    // return this.walletsService.findOne(+id);
+  }
 }

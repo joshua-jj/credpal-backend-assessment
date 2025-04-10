@@ -1,10 +1,11 @@
 import { LoggerService } from '@common/logger/logger.service';
 import { HelperUtil } from '@common/utils/helper.util';
 import { User } from '@modules/users/entities/user.entity';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Wallet } from './entities/wallet.entity';
+import { FundWalletDto } from './dto/fund-wallet.dto';
 
 @Injectable()
 export class WalletsService {
@@ -41,5 +42,15 @@ export class WalletsService {
     });
     const { balance } = wallet;
     return { balance };
+  }
+
+  async fund(fundWalletDto: FundWalletDto) {
+    const { cardNumber, expiryDate, cvv, amount } = fundWalletDto;
+    const isExpiryDateValid = HelperUtil.isValidMMYY(expiryDate);
+    if (isExpiryDateValid) {
+      throw new BadRequestException('Expiry date must be in MM/YY format');
+    }
+
+    // const balance = await this.getBalance()
   }
 }

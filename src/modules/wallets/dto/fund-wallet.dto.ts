@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, Length } from 'class-validator';
+import { IsDecimal, IsString, Length } from 'class-validator';
 
 export class FundWalletDto {
   @ApiProperty()
@@ -15,4 +15,8 @@ export class FundWalletDto {
   @IsString()
   @Length(3)
   cvv: string;
+
+  @ApiProperty()
+  @IsDecimal({ decimal_digits: '2' })
+  amount: string;
 }
