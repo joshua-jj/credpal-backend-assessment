@@ -16,7 +16,7 @@ import { CurrentUser } from '@common/decorators/current-user.decorator';
 import { ApiOperation, ApiParam } from '@nestjs/swagger';
 import { HelperUtil } from '@common/utils/helper.util';
 
-@Controller('wallet')
+@Controller('wallets')
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
@@ -31,8 +31,8 @@ export class WalletsController {
     );
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Post('fund')
+  fund(@Param('id') id: string) {
     return this.walletsService.findOne(+id);
   }
 
