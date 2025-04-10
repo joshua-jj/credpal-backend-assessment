@@ -1,7 +1,8 @@
 import { BaseAbstractEntity } from '@common/entities/base.entity';
 import { UserStatus } from '@common/enums/user-status.enum';
+import { HelperUtil } from '@common/utils/helper.util';
 import { Wallet } from '@modules/wallets/entities/wallet.entity';
-import { Column, Entity, OneToOne } from 'typeorm';
+import { BeforeInsert, Column, Entity, OneToOne } from 'typeorm';
 
 @Entity('users')
 export class User extends BaseAbstractEntity {
@@ -24,4 +25,9 @@ export class User extends BaseAbstractEntity {
     onDelete: 'SET NULL',
   })
   wallet: Wallet;
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await HelperUtil.hashPassword(this.password);
+  }
 }

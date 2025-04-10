@@ -16,6 +16,10 @@ export class HelperUtil {
     return await bcrypt.hash(password, salt);
   };
 
+  public static isPasswordsMatched = async (password: string, referencedPassword: string) =>  {
+    return await bcrypt.compare(password, referencedPassword)
+  }
+
   public static createJwtPayload = (user: User) => {
     return {
       id: user.id,
