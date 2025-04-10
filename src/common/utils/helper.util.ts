@@ -3,7 +3,6 @@ import { Wallet } from '@modules/wallets/entities/wallet.entity';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 
-type JwtPayload = User & Partial<Wallet>;
 export class HelperUtil {
   public static parseApiResponse = (
     statusCode: number,
@@ -28,7 +27,7 @@ export class HelperUtil {
   public static createJwtPayload = (user: User) => {
     return {
       id: Number(user.id),
-      email: user.email,
+      walletId: user.wallet.id,
     };
   };
 

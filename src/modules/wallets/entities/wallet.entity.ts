@@ -12,7 +12,6 @@ export class Wallet extends BaseAbstractEntity {
   balance: string;
 
   @OneToOne(() => User, (user) => user.wallet, {
-    eager: true,
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id' })

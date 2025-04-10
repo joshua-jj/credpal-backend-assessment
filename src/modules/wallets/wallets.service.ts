@@ -17,7 +17,6 @@ export class WalletsService {
     this.logger.setContext(WalletsService.name);
   }
   async create(userId: number) {
-    this.logger.log('userID', userId);
     let walletId: string;
     let existingWallet: Wallet;
     do {
