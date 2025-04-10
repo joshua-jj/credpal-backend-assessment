@@ -1,8 +1,7 @@
 import { BaseAbstractEntity } from '@common/entities/base.entity';
 import { TransactionType } from '@common/enums/transaction-type.enum';
-import { User } from '@modules/users/entities/user.entity';
 import { Wallet } from '@modules/wallets/entities/wallet.entity';
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity('transactions')
 export class Transaction extends BaseAbstractEntity {
