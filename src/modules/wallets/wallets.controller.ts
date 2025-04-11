@@ -11,8 +11,8 @@ export class WalletsController {
 
   @ApiOperation({ summary: 'Get wallet balance' })
   @Get('balance')
-  async getBalance(@CurrentUser('walletId') userId: number) {
-    const data = await this.walletsService.getBalance(userId);
+  async getBalance(@CurrentUser('walletId') walletId: string) {
+    const data = await this.walletsService.getBalance(walletId);
     return HelperUtil.parseApiResponse(
       HttpStatus.OK,
       'Wallet balance gotten successfully',
@@ -23,7 +23,11 @@ export class WalletsController {
   @ApiOperation({ summary: 'Fund wallet' })
   @ApiBody({ type: FundWalletDto })
   @Post('fund')
-  fund(@Body() body: FundWalletDto) {
-    // return this.walletsService.findOne(+id);
+  async fund(
+    @Body() body: FundWalletDto,
+    @CurrentUser('walletId') walletId: string,
+  ) {
+    await this.walletsService.fund(body, walletId);
+    return HelperUtil.parseApiResponse(HttpStatus.CREATED, 'Fund successful');
   }
 }

@@ -31,25 +31,26 @@ export class WalletsService {
     return await this.walletsRepository.save(wallet);
   }
 
-  async getBalance(userId: number) {
-    const wallet = await this.walletsRepository.findOne({
-      where: {
-        user: {
-          id: userId,
-        },
-      },
-    });
-    const { balance } = wallet;
+  async getBalance(walletId: string) {
+    const { balance } = await this.findOne(walletId);
     return { balance };
   }
 
-  async fund(fundWalletDto: FundWalletDto) {
-    const { cardNumber, expiryDate, cvv, amount } = fundWalletDto;
+  async findOne(walletId: string) {
+    return await this.walletsRepository.findOneBy({ walletId });
+  }
+
+  async fund(fundWalletDto: FundWalletDto, walletId: string) {
+    const { expiryDate, amount } = fundWalletDto;
     const isExpiryDateValid = HelperUtil.isValidMMYY(expiryDate);
-    if (isExpiryDateValid) {
+    if (!isExpiryDateValid) {
       throw new BadRequestException('Expiry date must be in MM/YY format');
     }
 
-    // const balance = await this.getBalance()
+    const wallet = await this.findOne(walletId);
+    const newBalance = Number(wallet.balance) + Number(amount);
+    const newWallet = { ...wallet, balance: String(newBalance) };
+
+    await this.walletsRepository.save(newWallet);
   }
 }

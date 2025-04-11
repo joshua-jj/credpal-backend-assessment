@@ -38,6 +38,11 @@ export class HelperUtil {
     return `W-${shortId}`;
   };
 
+  public static generateTransactionId = (): `TXN${string}` => {
+    const randomNumber = Math.floor(Math.random() * 9000000) + 1000000; // Generate between 1000000 and 9999999
+    return `TXN-${randomNumber}`;
+  };
+
   public static isValidMMYY(dateString: string) {
     const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
     return regex.test(dateString);

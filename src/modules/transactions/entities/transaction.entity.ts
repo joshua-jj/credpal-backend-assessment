@@ -20,12 +20,12 @@ export class Transaction extends BaseAbstractEntity {
   @ManyToOne(() => Wallet, (wallet) => wallet.sentTransactions, {
     onDelete: 'SET NULL',
   })
-  @JoinColumn({ name: 'sender_wallet_id' })
+  @JoinColumn({ name: 'sender_wallet_id', referencedColumnName: 'walletId' })
   senderWallet: Wallet;
 
   @ManyToOne(() => Wallet, (wallet) => wallet.receivedTransactions, {
     onDelete: 'SET NULL',
   })
-  @JoinColumn({ name: 'receiver_wallet_id' })
+  @JoinColumn({ name: 'receiver_wallet_id', referencedColumnName: 'walletId' })
   receiverWallet: Wallet;
 }
