@@ -1,10 +1,21 @@
 import { CurrentUser } from '@common/decorators/current-user.decorator';
 import { HelperUtil } from '@common/utils/helper.util';
-import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
-import { ApiBody, ApiOperation } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  DefaultValuePipe,
+  Get,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { FundWalletDto } from './dto/fund-wallet.dto';
 import { WalletsService } from './wallets.service';
 import { TransferDto } from './dto/transfer-dto';
+import { CurrentRoute } from '@common/decorators/current-route.decorator';
 
 @Controller('wallets')
 export class WalletsController {
@@ -44,5 +55,24 @@ export class WalletsController {
       HttpStatus.CREATED,
       'Transfer successful',
     );
+  }
+
+  @ApiOperation({ summary: 'Get all wallet transactions' })
+  @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
+  @ApiQuery({ name: 'limit', required: false, type: Number, example: 10 })
+  @ApiQuery({ name: 'search', required: false, type: String })
+  @ApiQuery({ name: 'filter', required: false, type: String })
+  @Get('transactions')
+  async getTransactions(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @CurrentUser('walletId') walletId: string,
+    @CurrentRoute() route: string,
+  ) {
+    // await this.walletsService.transfer(body, walletId);
+    // return HelperUtil.parseApiResponse(
+    //   HttpStatus.OK,
+    //   'Transfer successful',
+    // );
   }
 }

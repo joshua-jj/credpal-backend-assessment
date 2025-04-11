@@ -1,6 +1,7 @@
 import { User } from '@modules/users/entities/user.entity';
 import { Wallet } from '@modules/wallets/entities/wallet.entity';
 import * as bcrypt from 'bcrypt';
+import { Request } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
 type JwtPayload = Partial<User> & Partial<Wallet>;
@@ -28,7 +29,7 @@ export class HelperUtil {
   public static createJwtPayload = (user: JwtPayload): JwtPayload => {
     return {
       id: Number(user.id),
-      walletId: user.walletId
+      walletId: user.walletId,
     };
   };
 
@@ -39,12 +40,16 @@ export class HelperUtil {
   };
 
   public static generateTransactionId = (): `TXN${string}` => {
-    const randomNumber = Math.floor(Math.random() * 9000000) + 1000000; // Generate between 1000000 and 9999999
+    const randomNumber = Math.floor(Math.random() * 900000000) + 100000000; // Generate between 100000000 and 999999999
     return `TXN-${randomNumber}`;
   };
 
   public static isValidMMYY(dateString: string) {
     const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
     return regex.test(dateString);
+  }
+
+  public static getCurrentRoute(req: Request): string {
+    return `${req.protocol}://${req.get('host')}${req.originalUrl}`;
   }
 }

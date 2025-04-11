@@ -1,12 +1,11 @@
 import { TDatabaseConfig } from '@common/types/config.type';
-import configuration from 'src/config/index';
 import { ModulesModule } from '@modules/modules.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import configuration from 'src/config/index';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LoggerModule } from '@common/logger/logger.module';
 
 @Module({
   imports: [

@@ -6,6 +6,7 @@ import { HelperUtil } from '@common/utils/helper.util';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Wallet } from '@modules/wallets/entities/wallet.entity';
+import { PaginationQueryParams } from '@common/types/pagination-query';
 
 @Injectable()
 export class TransactionsService {
@@ -37,4 +38,6 @@ export class TransactionsService {
     transaction.receiverWallet = { walletId: receiverWalletId } as Wallet;
     return await this.transactionsRepository.save(transaction);
   }
+
+  async getWalletTransactions(params: PaginationQueryParams, route: string) {}
 }
