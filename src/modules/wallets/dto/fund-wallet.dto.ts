@@ -4,7 +4,6 @@ import { IsDecimal, IsString, Length } from 'class-validator';
 export class FundWalletDto {
   @ApiProperty()
   @IsString()
-  @Length(16, 16)
   cardNumber: string;
 
   @ApiProperty()
@@ -13,7 +12,6 @@ export class FundWalletDto {
 
   @ApiProperty()
   @IsString()
-  @Length(3, 3)
   cvv: string;
 
   @ApiProperty()

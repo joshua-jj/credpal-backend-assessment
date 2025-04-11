@@ -4,6 +4,7 @@ import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation } from '@nestjs/swagger';
 import { FundWalletDto } from './dto/fund-wallet.dto';
 import { WalletsService } from './wallets.service';
+import { TransferDto } from './dto/transfer-dto';
 
 @Controller('wallets')
 export class WalletsController {
@@ -29,5 +30,19 @@ export class WalletsController {
   ) {
     await this.walletsService.fund(body, walletId);
     return HelperUtil.parseApiResponse(HttpStatus.CREATED, 'Fund successful');
+  }
+
+  @ApiOperation({ summary: 'Wallet transfer' })
+  @ApiBody({ type: TransferDto })
+  @Post('transfer')
+  async transfer(
+    @Body() body: TransferDto,
+    @CurrentUser('walletId') walletId: string,
+  ) {
+    await this.walletsService.transfer(body, walletId);
+    return HelperUtil.parseApiResponse(
+      HttpStatus.CREATED,
+      'Transfer successful',
+    );
   }
 }
