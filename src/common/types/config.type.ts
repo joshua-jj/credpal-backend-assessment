@@ -1,10 +1,10 @@
-import { MysqlConnectionOptions } from "typeorm/driver/mysql/MysqlConnectionOptions";
+import { DataSourceOptions } from 'typeorm';
 
-export type TDatabaseConfig = MysqlConnectionOptions & {
+export type TDatabaseConfig = DataSourceOptions & {
   autoLoadEntities: boolean;
 };
 
-export type JwtConfig =  {
+export type JwtConfig = {
   secret: string;
   expiresIn: string;
 };
