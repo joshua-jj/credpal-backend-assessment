@@ -17,7 +17,14 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "typeorm:run-migrations": "npm run typeorm migration:run -- -d ./src/config/data-source.ts",
+    "typeorm:generate-migration": "cross-var npm run typeorm -- -d ./src/config/data-source.ts migration:generate ./src/database/migrations/%npm_config_name%",
+    "typeorm:create-migration": "cross-var npm run typeorm -- migration:create ./src/database/migrations/%npm_config_name%",
+    "typeorm:revert-migration": "npm run typeorm -- -d ./src/config/data-source.ts migration:revert",
+    "drop:database": "npm run typeorm schema:drop",
+    "db:seed": "ts-node -r tsconfig-paths/register ./src/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -26,20 +33,29 @@
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/mapped-types": "^2.1.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^8.1.1",
     "@nestjs/typeorm": "^11.0.0",
     "@swc/cli": "^0.6.0",
     "@swc/core": "^1.11.18",
+    "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "cross-var": "^1.1.0",
+    "dotenv": "^16.4.7",
+    "module-alias": "^2.2.3",
     "mysql2": "^3.14.0",
+    "nestjs-typeorm-paginate": "^4.1.0",
+    "pnpm": "^10.8.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.22"
+    "typeorm": "^0.3.22",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
@@ -78,7 +94,10 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "@nestjs/core"
+      "@nestjs/core",
+      "@scarf/scarf",
+      "bcrypt",
+      "core-js"
     ],
     "ignoredBuiltDependencies": [
       "@swc/core"

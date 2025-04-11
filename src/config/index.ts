@@ -1,5 +1,5 @@
-import databaseConfig from './database.config';
-import jwtConfig from './jwt.config';
+import databaseConfig from './database';
+import jwtConfig from './jwt';
 
 const configuration = () => ({
   port: process.env.PORT,
