@@ -15,6 +15,7 @@ import { Repository } from 'typeorm';
 import { FundWalletDto } from './dto/fund-wallet.dto';
 import { Wallet } from './entities/wallet.entity';
 import { TransferDto } from './dto/transfer-dto';
+import { PaginationQueryParams } from '@common/types/pagination-query';
 
 @Injectable()
 export class WalletsService {
@@ -113,5 +114,17 @@ export class WalletsService {
       await this.walletsRepository.save(newReceiverWallet),
       await this.transactionsService.create(transferData),
     ]);
+  }
+
+  async getTransactions(
+    params: PaginationQueryParams,
+    walletId: string,
+    route: string,
+  ) {
+    return await this.transactionsService.getWalletTransactions(
+      params,
+      walletId,
+      route,
+    );
   }
 }

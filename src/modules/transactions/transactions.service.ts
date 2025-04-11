@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { UpdateTransactionDto } from './dto/update-transaction.dto';
-import { Transaction } from './entities/transaction.entity';
-import { HelperUtil } from '@common/utils/helper.util';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Wallet } from '@modules/wallets/entities/wallet.entity';
 import { PaginationQueryParams } from '@common/types/pagination-query';
+import { HelperUtil } from '@common/utils/helper.util';
+import { Wallet } from '@modules/wallets/entities/wallet.entity';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { paginate } from 'nestjs-typeorm-paginate';
+import { ILike, Repository } from 'typeorm';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { Transaction } from './entities/transaction.entity';
 
 @Injectable()
 export class TransactionsService {
@@ -39,5 +39,37 @@ export class TransactionsService {
     return await this.transactionsRepository.save(transaction);
   }
 
-  async getWalletTransactions(params: PaginationQueryParams, route: string) {}
+  async getWalletTransactions(
+    params: PaginationQueryParams,
+    walletId: string,
+    route: string,
+  ) {
+    const { page, limit, search, filter } = params;
+    const where = {};
+
+    if (search) {
+      where['transactionId'] = ILike(`%${search}%`);
+    }
+
+    if (filter) {
+      where['type'] = filter;
+    }
+
+    where['senderWallet'] = { walletId };
+
+    const options = { page, limit, route };
+
+    const paginatedTransactions = paginate<Transaction>(
+      this.transactionsRepository,
+      options,
+      {
+        where,
+        order: {
+          createdAt: 'DESC',
+        },
+      },
+    );
+
+    return paginatedTransactions;
+  }
 }

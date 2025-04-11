@@ -66,13 +66,21 @@ export class WalletsController {
   async getTransactions(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('search') search: string,
+    @Query('filter') filter: string,
     @CurrentUser('walletId') walletId: string,
     @CurrentRoute() route: string,
   ) {
-    // await this.walletsService.transfer(body, walletId);
-    // return HelperUtil.parseApiResponse(
-    //   HttpStatus.OK,
-    //   'Transfer successful',
-    // );
+    const params = { page, limit, search, filter };
+    const data = await this.walletsService.getTransactions(
+      params,
+      walletId,
+      route,
+    );
+    return HelperUtil.parseApiResponse(
+      HttpStatus.OK,
+      'Wallet transactions retrieved successful',
+      data,
+    );
   }
 }
