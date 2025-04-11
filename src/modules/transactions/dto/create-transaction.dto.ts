@@ -1,15 +1,10 @@
+import { TransactionType } from '@common/enums/transaction-type.enum';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEnum,
-  IsNotEmpty,
-  IsNumber,
   IsOptional,
-  IsString,
-  IsUUID,
-  Min,
+  IsString
 } from 'class-validator';
-import { Type } from 'class-transformer';
-import { TransactionType } from '@common/enums/transaction-type.enum';
 
 export class CreateTransactionDto {
   @ApiProperty({ example: TransactionType.DEPOSIT })
@@ -26,5 +21,5 @@ export class CreateTransactionDto {
 
   @ApiProperty()
   @IsString()
-  receiverWalletId?: string | null;
+  receiverWalletId: string;
 }

@@ -1,11 +1,14 @@
+import { TransactionType } from '@common/enums/transaction-type.enum';
 import { LoggerService } from '@common/logger/logger.service';
 import { HelperUtil } from '@common/utils/helper.util';
+import { CreateTransactionDto } from '@modules/transactions/dto/create-transaction.dto';
+import { TransactionsService } from '@modules/transactions/transactions.service';
 import { User } from '@modules/users/entities/user.entity';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Wallet } from './entities/wallet.entity';
 import { FundWalletDto } from './dto/fund-wallet.dto';
+import { Wallet } from './entities/wallet.entity';
 
 @Injectable()
 export class WalletsService {
@@ -13,6 +16,7 @@ export class WalletsService {
     @InjectRepository(Wallet)
     private readonly walletsRepository: Repository<Wallet>,
     private readonly logger: LoggerService,
+    private readonly transactionsService: TransactionsService,
   ) {
     this.logger.setContext(WalletsService.name);
   }
@@ -50,7 +54,12 @@ export class WalletsService {
     const wallet = await this.findOne(walletId);
     const newBalance = Number(wallet.balance) + Number(amount);
     const newWallet = { ...wallet, balance: String(newBalance) };
-
+    const createTransactionDto: CreateTransactionDto = {
+      type: TransactionType.DEPOSIT,
+      amount,
+      receiverWalletId: walletId,
+    };
     await this.walletsRepository.save(newWallet);
+    await this.transactionsService.create(createTransactionDto);
   }
 }
