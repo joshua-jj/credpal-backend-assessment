@@ -28,7 +28,7 @@ export class TransactionsService {
       transactionId,
       ...createTransactionDto,
     });
-    
+
     if (senderWalletId) {
       transaction.senderWallet = {
         walletId: senderWalletId,
@@ -36,9 +36,5 @@ export class TransactionsService {
     }
     transaction.receiverWallet = { walletId: receiverWalletId } as Wallet;
     return await this.transactionsRepository.save(transaction);
-  }
-
-  findAll() {
-    return `This action returns all transactions`;
   }
 }

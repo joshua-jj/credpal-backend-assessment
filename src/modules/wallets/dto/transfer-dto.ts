@@ -19,5 +19,5 @@ export class TransferDto {
   @ApiProperty()
   @IsString()
   @IsOptional()
-  note: string;
+  description: string;
 }

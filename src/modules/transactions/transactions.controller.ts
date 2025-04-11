@@ -9,8 +9,4 @@ import { TransactionsService } from './transactions.service';
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
-  @Get()
-  findAll() {
-    return this.transactionsService.findAll();
-  }
 }
