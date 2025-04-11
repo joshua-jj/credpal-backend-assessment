@@ -45,17 +45,23 @@ export class TransactionsService {
     route: string,
   ) {
     const { page, limit, search, filter } = params;
-    const where = {};
+
+    const where = [
+      { senderWallet: { walletId } },
+      { receiverWallet: { walletId } },
+    ];
 
     if (search) {
-      where['transactionId'] = ILike(`%${search}%`);
+      where.forEach((condition) => {
+        condition['transactionId'] = ILike(`%${search}%`);
+      });
     }
 
     if (filter) {
-      where['type'] = filter;
+      where.forEach((condition) => {
+        condition['type'] = filter;
+      });
     }
-
-    where['senderWallet'] = { walletId };
 
     const options = { page, limit, route };
 
