@@ -17,13 +17,8 @@ export class Wallet extends BaseAbstractEntity {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.senderWallet, {
+  @OneToMany(() => Transaction, (transaction) => transaction.wallet, {
     cascade: true,
   })
-  sentTransactions: Transaction[];
-
-  @OneToMany(() => Transaction, (transaction) => transaction.receiverWallet, {
-    cascade: true,
-  })
-  receivedTransactions: Transaction[];
+  transactions: Transaction[];
 }

@@ -31,11 +31,10 @@ export class TransactionsService {
     });
 
     if (senderWalletId) {
-      transaction.senderWallet = {
+      transaction.wallet = {
         walletId: senderWalletId,
       } as Wallet;
     }
-    transaction.receiverWallet = { walletId: receiverWalletId } as Wallet;
     return await this.transactionsRepository.save(transaction);
   }
 
@@ -46,10 +45,7 @@ export class TransactionsService {
   ) {
     const { page, limit, search, filter } = params;
 
-    const where = [
-      { senderWallet: { walletId } },
-      { receiverWallet: { walletId } },
-    ];
+    const where = [{ wallet: { walletId } }];
 
     if (search) {
       where.forEach((condition) => {

@@ -62,7 +62,7 @@ export class WalletsService {
     const newBalance = Number(wallet.balance) + Number(amount);
     const newWallet = { ...wallet, balance: String(newBalance) };
     const createTransactionDto: CreateTransactionDto = {
-      type: TransactionType.DEPOSIT,
+      type: TransactionType.CREDIT,
       amount,
       receiverWalletId: walletId,
     };
@@ -103,16 +103,16 @@ export class WalletsService {
       balance: newReceiverBalance,
     };
 
-    const transferData = {
+    const creditData = {
       ...transferDto,
       senderWalletId,
-      type: TransactionType.TRANSFER,
+      type: TransactionType.CREDIT,
     };
 
     await Promise.all([
       await this.walletsRepository.save(newSenderWallet),
       await this.walletsRepository.save(newReceiverWallet),
-      await this.transactionsService.create(transferData),
+      await this.transactionsService.create(creditData),
     ]);
   }
 

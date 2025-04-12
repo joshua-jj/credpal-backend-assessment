@@ -1,6 +1,12 @@
-import { MigrationInterface, QueryRunner, Table, TableForeignKey, TableIndex } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+  TableIndex,
+} from 'typeorm';
 
-export class CreateTransactionsTable1744359631169
+export class CreateTransactionsTable1744453189105
   implements MigrationInterface
 {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -24,7 +30,7 @@ export class CreateTransactionsTable1744359631169
           {
             name: 'type',
             type: 'enum',
-            enum: ['Deposit', 'Withdrawal', 'Transfer'],
+            enum: ['Credit', 'Debit'],
           },
           {
             name: 'amount',
@@ -33,14 +39,13 @@ export class CreateTransactionsTable1744359631169
             scale: 2,
           },
           {
-            name: 'sender_wallet_id',
-            type: 'varchar',
+            name: 'description',
+            type: 'text',
             isNullable: true,
           },
           {
-            name: 'receiver_wallet_id',
+            name: 'wallet_id',
             type: 'varchar',
-            isNullable: true,
           },
           {
             name: 'created_at',
@@ -71,36 +76,19 @@ export class CreateTransactionsTable1744359631169
     await queryRunner.createForeignKey(
       'transactions',
       new TableForeignKey({
-        name: 'FK_sender_wallet_transaction',
-        columnNames: ['sender_wallet_id'],
+        name: 'FK_wallet_transaction',
+        columnNames: ['wallet_id'],
         referencedColumnNames: ['wallet_id'],
         referencedTableName: 'wallets',
-        onDelete: 'SET NULL',
-      }),
-    );
-
-    await queryRunner.createForeignKey(
-      'transactions',
-      new TableForeignKey({
-        name: 'FK_receiver_wallet_transaction',
-        columnNames: ['receiver_wallet_id'],
-        referencedColumnNames: ['wallet_id'],
-        referencedTableName: 'wallets',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     // Drop the foreign keys first
-    await queryRunner.dropForeignKey(
-      'transactions',
-      'FK_sender_wallet_transaction',
-    );
-    await queryRunner.dropForeignKey(
-      'transactions',
-      'FK_receiver_wallet_transaction',
-    );
+    await queryRunner.dropForeignKey('transactions', 'FK_wallet_transaction');
     // Then drop the index
     await queryRunner.dropIndex('transactions', 'idx_type');
     // Finally, drop the table
