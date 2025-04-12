@@ -79,7 +79,7 @@ export class WalletsController {
     );
     return HelperUtil.parseApiResponse(
       HttpStatus.OK,
-      'Wallet transactions retrieved successful',
+      'Wallet transactions retrieved successfully',
       data,
     );
   }
