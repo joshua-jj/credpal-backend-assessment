@@ -20,15 +20,10 @@ export class Transaction extends BaseAbstractEntity {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @ManyToOne(() => Wallet, (wallet) => wallet.sentTransactions, {
-    onDelete: 'SET NULL',
+  @ManyToOne(() => Wallet, (wallet) => wallet.transactions, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
   })
-  @JoinColumn({ name: 'sender_wallet_id', referencedColumnName: 'walletId' })
-  senderWallet: Wallet;
-
-  @ManyToOne(() => Wallet, (wallet) => wallet.receivedTransactions, {
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn({ name: 'receiver_wallet_id', referencedColumnName: 'walletId' })
-  receiverWallet: Wallet;
+  @JoinColumn({ name: 'wallet_id', referencedColumnName: 'walletId' })
+  wallet: Wallet;
 }

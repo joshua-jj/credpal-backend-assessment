@@ -62,19 +62,22 @@ export class WalletsService {
     const newBalance = Number(wallet.balance) + Number(amount);
     const newWallet = { ...wallet, balance: String(newBalance) };
     const createTransactionDto: CreateTransactionDto = {
-      type: TransactionType.DEPOSIT,
+      type: TransactionType.CREDIT,
       amount,
-      receiverWalletId: walletId,
+      walletId,
     };
     await this.walletsRepository.save(newWallet);
     await this.transactionsService.create(createTransactionDto);
   }
 
   async transfer(transferDto: TransferDto, senderWalletId: string) {
-    const receiverWallet = await this.findOne(transferDto.receiverWalletId);
+    const { receiverWalletId, amount, description } = transferDto;
+    const receiverWallet = await this.findOne(receiverWalletId);
 
-    if (senderWalletId === transferDto.receiverWalletId) {
-      throw new ForbiddenException(`Wallet ${senderWalletId} belongs to you!`);
+    if (senderWalletId === receiverWalletId) {
+      throw new ForbiddenException(
+        `Wallet ${receiverWalletId} belongs to you!`,
+      );
     }
 
     if (!receiverWallet) {
@@ -83,18 +86,18 @@ export class WalletsService {
 
     const senderWallet = await this.findOne(senderWalletId);
 
-    if (Number(senderWallet.balance) < Number(transferDto.amount)) {
+    if (Number(senderWallet.balance) < Number(amount)) {
       throw new ForbiddenException(
         'You do not have sufficient balance to carry out this operation',
       );
     }
 
     const newSenderBalance = String(
-      Number(senderWallet.balance) - Number(transferDto.amount),
+      Number(senderWallet.balance) - Number(amount),
     );
 
     const newReceiverBalance = String(
-      Number(receiverWallet.balance) + Number(transferDto.amount),
+      Number(receiverWallet.balance) + Number(amount),
     );
 
     const newSenderWallet = { ...senderWallet, balance: newSenderBalance };
@@ -103,16 +106,25 @@ export class WalletsService {
       balance: newReceiverBalance,
     };
 
-    const transferData = {
-      ...transferDto,
-      senderWalletId,
-      type: TransactionType.TRANSFER,
+    const creditData: CreateTransactionDto = {
+      type: TransactionType.CREDIT,
+      amount,
+      walletId: receiverWalletId,
+      description
+    };
+
+    const debitData: CreateTransactionDto = {
+      type: TransactionType.DEBIT,
+      amount,
+      walletId: senderWalletId,
+      description
     };
 
     await Promise.all([
       await this.walletsRepository.save(newSenderWallet),
       await this.walletsRepository.save(newReceiverWallet),
-      await this.transactionsService.create(transferData),
+      await this.transactionsService.create(creditData),
+      await this.transactionsService.create(debitData),
     ]);
   }
 

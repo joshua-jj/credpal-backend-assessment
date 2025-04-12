@@ -15,7 +15,7 @@ export class TransactionsService {
     private readonly transactionsRepository: Repository<Transaction>,
   ) {}
   async create(createTransactionDto: CreateTransactionDto) {
-    const { senderWalletId, receiverWalletId } = createTransactionDto;
+    const { walletId } = createTransactionDto;
     let transactionId: string;
     let existingTransaction: Transaction;
     do {
@@ -30,12 +30,8 @@ export class TransactionsService {
       ...createTransactionDto,
     });
 
-    if (senderWalletId) {
-      transaction.senderWallet = {
-        walletId: senderWalletId,
-      } as Wallet;
-    }
-    transaction.receiverWallet = { walletId: receiverWalletId } as Wallet;
+    transaction.wallet = { walletId } as Wallet;
+
     return await this.transactionsRepository.save(transaction);
   }
 
@@ -46,21 +42,14 @@ export class TransactionsService {
   ) {
     const { page, limit, search, filter } = params;
 
-    const where = [
-      { senderWallet: { walletId } },
-      { receiverWallet: { walletId } },
-    ];
+    const where = { wallet: { walletId } };
 
     if (search) {
-      where.forEach((condition) => {
-        condition['transactionId'] = ILike(`%${search}%`);
-      });
+      where['transactionId'] = ILike(`%${search}%`);
     }
 
     if (filter) {
-      where.forEach((condition) => {
-        condition['type'] = filter;
-      });
+      where['type'] = filter;
     }
 
     const options = { page, limit, route };
