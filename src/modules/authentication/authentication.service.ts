@@ -1,3 +1,4 @@
+import { LoggerService } from '@common/logger/logger.service';
 import { HelperUtil } from '@common/utils/helper.util';
 import { CreateUserDto } from '@modules/users/dto/create-user.dto';
 import { UsersService } from '@modules/users/users.service';
@@ -9,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dtos/login.dto';
-import { LoggerService } from '@common/logger/logger.service';
 
 @Injectable()
 export class AuthenticationService {

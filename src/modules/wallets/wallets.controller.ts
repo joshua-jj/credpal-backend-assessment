@@ -1,3 +1,4 @@
+import { CurrentRoute } from '@common/decorators/current-route.decorator';
 import { CurrentUser } from '@common/decorators/current-user.decorator';
 import { HelperUtil } from '@common/utils/helper.util';
 import {
@@ -6,16 +7,14 @@ import {
   DefaultValuePipe,
   Get,
   HttpStatus,
-  Param,
   ParseIntPipe,
   Post,
-  Query,
+  Query
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { FundWalletDto } from './dto/fund-wallet.dto';
-import { WalletsService } from './wallets.service';
 import { TransferDto } from './dto/transfer-dto';
-import { CurrentRoute } from '@common/decorators/current-route.decorator';
+import { WalletsService } from './wallets.service';
 
 @Controller('wallets')
 export class WalletsController {
