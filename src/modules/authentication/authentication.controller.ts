@@ -1,10 +1,10 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { AuthenticationService } from './authentication.service';
 import { Public } from '@common/decorators/public.decorator';
-import { CreateUserDto } from '@modules/users/dto/create-user.dto';
 import { HelperUtil } from '@common/utils/helper.util';
+import { CreateUserDto } from '@modules/users/dto/create-user.dto';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { ApiBody, ApiOperation } from '@nestjs/swagger';
+import { AuthenticationService } from './authentication.service';
 import { LoginDto } from './dtos/login.dto';
-import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthenticationController {
