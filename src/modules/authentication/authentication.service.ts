@@ -26,7 +26,7 @@ export class AuthenticationService {
     const user = await this.usersService.findByEmail(email);
 
     if (user) {
-      throw new ConflictException('User already exists');
+      throw new ConflictException('Email already exists');
     }
 
     const newUser = await this.usersService.createUser(signUpDto);
